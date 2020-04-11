@@ -3,9 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import 'lib-flexible/flexible'
+import { Dialog } from 'vant'
 
 Vue.config.productionTip = false
-
+Vue.use(Dialog)
 new Vue({
   router,
   store,
