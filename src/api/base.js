@@ -1,3 +1,3 @@
-const BASEURL = '/api/v1/index';
+const baseUrl = '/api/v1/index';
 
-export default BASEURL
+export default baseUrl

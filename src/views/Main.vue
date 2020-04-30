@@ -1,6 +1,9 @@
 <template>
     <div>
         MAIN
+        <div v-html="s">
+
+        </div>
     </div>
 </template>
 
@@ -9,7 +12,7 @@ export default {
     name:'Main',
     data(){
         return{
-            
+            s:`<script>console.log('test');<`+`/script>`
         }
     }
 }

@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <van-form @submit="onSubmit" ref="form1">
       <van-field
         v-model="phone"
@@ -15,8 +16,9 @@
         center
         label="短信验证码"
         name="code"
-        :rules="[{ required:true , message:codeVM ,trigger:'onBlur'}]"
         placeholder="请输入短信验证码"
+        :rules="[{ message:codeVM,trigger:'onBlur' }]"
+
       >
         <template #button>
           <van-button
@@ -30,25 +32,35 @@
         </template>
       </van-field>
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">提交</van-button>
+        <van-button round block type="info" native-type="submit" :disabled="isCodeNull">提交</van-button>
+      </div>
+      <div class="reg">
+        <span class="reg-item"></span>
+        <span class="reg-item" style="text-align: right" @click="onRegister">手机快速注册</span>
       </div>
     </van-form>
+
   </div>
 </template>
-
+<style>
+  .reg{
+    display: flex;
+    margin:16px;
+    font-size: .44rem;
+    color: rgba(0,0,0,.4);
+  }
+  .reg-item{
+    flex-grow: 1;
+  }
+</style>
 <script>
-import { Form, Field, Button } from "vant";
 import { login } from "@/api/user";
 import { code } from "@/api/common";
 import Timer from "@/utils/timer";
+import {validPhoneNumber} from "../../utils/validate";
 
 export default {
   name: "Login",
-  components: {
-    [Form.name]: Form,
-    [Field.name]: Field,
-    [Button.name]: Button
-  },
   data() {
     return {
       phone: "",
@@ -57,11 +69,10 @@ export default {
       phoneVM: "",
       codeVM: "验证码不能为空",
 
-      phoneRegex: /^1[3456789]\d{9}$/,
 
       codeTriggerStatus: 0,
 
-      
+
     };
   },
 
@@ -72,30 +83,42 @@ export default {
 
     canSendCode() {
       return this.codeTriggerStatus > 0;
+    },
+
+    isCodeNull(){
+      return !this.codeValidator(this.code);
     }
+
   },
 
-  // watch:{
-
-  //   codeTriggerStatus(val){
-  //     val || clearInterval(this.timer); //清除倒计时
-  //   }
-  // },
 
   methods: {
     //登录
     onSubmit() {
+      if(!this.codeValidator(this.code) ){
+
+          return;
+      }
       login({ phone: this.phone, code: this.code })
-      
+
     },
 
     //手机号验证
     phoneValidator(val) {
-      if (!this.phoneRegex.test(val)) {
+      if (!validPhoneNumber(val)) {
         this.phoneVM = "手机号码有误";
         return false;
       }
       return true;
+    },
+
+    //验证码验证
+    codeValidator(val){
+      if( val && val !== ''){
+        return true;
+      }
+      this.codeVM = '验证码不能为空';
+      return false;
     },
 
     //获取消息验证码
@@ -122,7 +145,14 @@ export default {
         this.turnOnSendCode();
         this.getCode();
       }
+    },
+
+    //go to register page
+    onRegister(){
+      this.$router.push('/register/phone')
     }
+
+
   }
 };
 </script>

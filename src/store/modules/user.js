@@ -47,6 +47,7 @@ const actions = {
         })
     },
 
+    //获取用户信息
     getInfo({ commit, state }) {
         return new Promise((resolve, reject) => {
             getInfo(state.token).then(resp => {
@@ -55,9 +56,9 @@ const actions = {
                     reject('Verification failed, please Login again.')
                 }
 
-                const { username, avatar } = data;
+                const { name, avatar } = data;
 
-                commit('SET_NAME', username);
+                commit('SET_NAME', name);
                 commit('SET_AVATAR', avatar);
                 resolve(data)
             }).catch(error => {

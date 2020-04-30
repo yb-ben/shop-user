@@ -1,6 +1,6 @@
 module.exports = {
     plugins: {
-      autoprefixer: {
+      'autoprefixer': {
         browsers: ['Android >= 4.0', 'iOS >= 8'],
       },
       'postcss-pxtorem': {
@@ -8,4 +8,4 @@ module.exports = {
         propList: ['*'],
       },
     },
-  };
+};

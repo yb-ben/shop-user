@@ -1,10 +1,18 @@
 import request from '@/utils/request'
-import {BASEURL} from '@/api/base'
-
+import baseUrl from '@/api/base'
 //登录
 export function login(data){
     return request({
-        url: BASEURL + '/user/login',
+        url: baseUrl + '/user/login',
+        method:'post',
+        data
+    })
+}
+
+//注册
+export function registerByCode(data){
+    return request({
+        url:baseUrl + '/user/register/code',
         method:'post',
         data
     })
@@ -13,7 +21,7 @@ export function login(data){
 //个人信息
 export function getInfo(){
     return request({
-        url: BASEURL + '/user/info',
+        url: baseUrl + '/user/info',
         method:'get',
 
     })
@@ -23,7 +31,15 @@ export function getInfo(){
 export function logout(){
 
     return request({
-        url: BASEURL + '/user/logout',
+        url: baseUrl + '/user/logout',
+        method:'get'
+    })
+}
+
+//部分订单数
+export function someCount() {
+    return request({
+        url:baseUrl+'/user/order/someCount',
         method:'get'
     })
 }
