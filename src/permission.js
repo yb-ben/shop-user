@@ -30,7 +30,11 @@ router.beforeEach(async(to, from, next) => {
                 } catch (error) {
                     // remove token and go to login page to re-login
                     await store.dispatch('user/resetToken')
-                    next({path:'/login',params:{redirect_to:to.path}})
+                    if(blackList.indexOf(to.path) !== -1){
+                        next({path:'/login',params:{redirect_to:to.path}})
+                    }else{
+                        next();
+                    }
                   }
             }
         }

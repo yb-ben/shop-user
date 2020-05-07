@@ -61,9 +61,9 @@ service.interceptors.response.use(
                     title:'错误',
                     message:res.msg
                 });
-                Promise.reject(res);
+                return Promise.reject(res);
             }
-            return res;
+           // return res;
         } else {
             let token = res.data.token
             if(token){

@@ -254,12 +254,12 @@
 
                 submit(d)
                     .then((resp)=>{
-
+                        console.log(resp);
                         this.isSubmit = false;
                         this.$router.replace({name:'Payment',query:{order_id:resp.data.id,totalPrice:this.totalPrice}})
-                 }).catch(()=>{
-                    this.isSubmit = false;
-                });
+                 },()=>{
+                        this.isSubmit = false;
+                    });
             }
         },
 
